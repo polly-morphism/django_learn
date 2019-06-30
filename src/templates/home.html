@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block head_title %}Home{% endblock %}
+
+{% block content %}
+<p>Our home shit</p>
+{{title}}
+{{request.user}}
+{{user}}
+{{user.is_authenticated}}
+
+{% if user.is_authenticated %}
+<h1>Hi bitch</h1>
+{%endif%}
+
+{% endblock %}
