@@ -1,6 +1,9 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404
 from .models import BlogPost
 from django.http import Http404
+from .forms import BlogPostModelForm
 # Create your views here.
 
 
@@ -14,10 +17,19 @@ def blog_post_list_view(request):
 
 #CRUD create-retrieve-update-dalete
 
+
+#@login_required
+@staff_member_required
 def blog_post_create_view(request):
     #create objects
-    template_name = 'blog/create.html'
-    context = {'form': None}
+    form = BlogPostModelForm(request.POST or None)
+    if form.is_valid():
+        form.save() #can't use it unless it's a model
+        obj.user = request.user
+        obj.save()
+        form = BlogPostModelForm()
+    template_name = 'form.html'
+    context = {'form': form}
     return render(request, template_name, context)
 
 
